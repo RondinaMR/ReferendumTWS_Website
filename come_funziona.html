@@ -29,9 +29,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="http://softeng.polito.it/courses/VIQ/plotly-latest.min.js"></script>
-    <script src="js/script_plotly.js"></script>
-    <script src="js/script.js"></script>
   </head>
 
   <body>
@@ -45,14 +42,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">#ReferendumCostituzionale: #BastaUnSi o #IoVotoNo?</a>
-          <span class="navbar-brand"> - </span>
-          <span id="info_status" class="navbar-brand"></span>
+          <a class="navbar-brand" href="#">Suffragium - #ReferendumCostituzionale: #BastaUnSi o #IoVotoNo?</a>
+          <span class="navbar-brand">Numero di tweet: / Numero di utenti: </span>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.html">Dashboard</a></li>
-            <!--<li><a href="come_funziona.html">Come funziona</a></li>-->
+            <li><a href="come_funziona.html">Come funziona</a></li>
             <li><a href="https://github.com/RondinaMR/ReferendumTWS" target=”_blank”>Source code</a></li>
             <li><a href="#">Contatti</a></li>
           </ul>
@@ -65,81 +61,53 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="main">
-        <!--"col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"-->
-          <h1 class="page-header">Dashboard</h1>
+        <div class="main"><!--"col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"-->        
+          <h1 class="page-header">Come funziona</h1>
 
           <div class="row placeholders">
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Intenzioni di voto</h2>
-                <h3>Stima delle ultime intenzioni di voto</h3>
-                <span class="text-muted">info</span>
-                <div id="divGR1" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Intenzioni di voto</h2>
+              <h3>Stima delle ultime intenzioni di voto</h3>
+              <span class="text-muted">Le percentuali sono calcolate sull’analisi di tutti i tweet fino ad ora processati: ogni utente generatore del tweet viene memorizzato (in maniera univoca) e categorizzato sulla base della presenza di determinate parole chiave per il NO (#IoVotoNo, la coppia #ReferendumCostituzionale e #VotoNo) e per il SI ( #BastaUnSi, #ItaliaCheDiceSi, #IoVotoSi, la coppia #ReferendumCostituzionale e #VotoSi). Viene inoltre fatto un controllo sull’ambiguità della posizione politica, valutando se l’utente in precedenza aveva twittato per una diversa fazione.</span>
             </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Trend voto</h2>
-                <h3>Andamento assoluto</h3>
-                <span class="text-muted">Info</span>
-                <div id="divGR2" class="graph"></div>
-              </div>       
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Trend voto</h2>
+              <h3>Andamento assoluto</h3>
+              <span class="text-muted">Le percentuali sono calcolate con la stessa metodologia precedente, raggruppando progressivamente queste ultime per singola ora</span>
             </div>
           </div>
           <div class="row placeholders">
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Trend voto</h2>
-                <h3>Andamento giornaliero</h3>
-                <span class="text-muted">Info</span>
-                <div id="divGR2D" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Trend voto</h2>
+              <h3>Andamento giornaliero</h3>
+              <span class="text-muted">Le percentuali sono calcolate con la stessa metodologia precedente, giorno per giorno</span>
             </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Trend voto</h2>
-                <h3>Andamento settimanale</h3>
-                <span class="text-muted">Info</span>
-                <div id="divGR2W" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Trend voto</h2>
+              <h3>Andamento settimanale</h3>
+              <span class="text-muted">Le percentuali sono calcolate con la stessa metodologia precedente, settimana per settimana</span>
             </div>
           </div>
           <div class="row placeholders">
-            <div class="col-xs-12 col-md-12">
-              <div class="placeholder">
-                <h2>Popolarità</h2>
-                <span class="text-muted">Info</span>
-                <div id="divGR3" class="graph"></div>
-              </div>
+            <div class="placeholder">
+              <h2>Popolarità</h2>
+              <span class="text-muted">Andamento temporale della popolarità del tema</span>
             </div>
           </div>
           <div class="row placeholders">
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Menzioni (SI)</h2>
-                <div id="divMS" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Menzioni (SI)</h2>
             </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Menzioni (NO)</h2>
-                <div id="divMN" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Menzioni (NO)</h2>
             </div>
           </div>
           <div class="row placeholders">
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Hashtag (SI)</h2>
-                <div id="divHS" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Hashtag (SI)</h2>
             </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="placeholder">
-                <h2>Hashtag (NO)</h2>
-                <div id="divHN" class="graph"></div>
-              </div>
+            <div class="col-xs-12 col-md-6 placeholder">
+              <h2>Hashtag (NO)</h2>
             </div>
           </div>
           </div>

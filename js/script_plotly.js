@@ -9,7 +9,7 @@ function disegna(xvalues,yvalues,id){
   }];
   var annotationContent = [];
   var layout = {
-    title: "Intenzioni di voto",
+    //title: "Intenzioni di voto",
     /*width: 400,
     height: 400,*/
     ticks:"outside",
@@ -77,7 +77,7 @@ function disegnaTrend(xvalues,y1,y2,y3,id){
 	};
     var data = [trace1,trace2,trace3];
   var layout = {
-    title: "Trend voto",
+    //title: "Trend voto",
     font: {
       size: 12
     },
@@ -102,68 +102,6 @@ function disegnaTrend(xvalues,y1,y2,y3,id){
   				}]
   };
 
-  //Plotly.plot(id, stackedArea(traces), layout);
-  Plotly.plot(id, data, layout);
-}
-
-function disegnaHourTrend(xvalues,y1,y2,y3,id){
-	var trace1={
-		name:"SI",
-	   	x: xvalues,
-	   	y: y1,
-	   	mode: 'lines+markers',
-  		line: {shape: 'hv'},
-  		type: 'scatter',
-       	fill: "tozeroy",
-	};
-	var trace2={
-		name:"NO",
-	   	x: xvalues,
-	   	y: y2,
-	   	mode: 'lines+markers',
-  		line: {shape: 'hv'},
-  		type: 'scatter',
-       	fill: "tonexty"
-	};
-	var trace3={
-		name:"Maggioranza",
-		x: xvalues,
-		y: y3,
-		type: "scatter",
-		mode: "lines",
-		line: {
-		    dash: 'dot',
-		    width: 4
-  		}
-	};
-    var data = [trace1,trace2,trace3];
-  var layout = {
-    title: "Trend voto",
-    font: {
-      size: 12
-    },
-    yaxis: {
-    	  tickformat: "%",
-    	  range: [0,1]
-    },
-    xaxis: {
-    	title: "Time",
-    	type: 'date',
-		//tickformat: "%a, %d"
-    },
-	annotations: [{
-	    	   xref: 'paper',
-				yref: 'paper',
-				x: 0,
-				xanchor: 'right',
-				y: 1,
-				yanchor: 'bottom',
-				text: '<b>Utenti %</b>',
-				showarrow: false
-  				}]
-  };
-
-  //Plotly.plot(id, stackedArea(traces), layout);
   Plotly.plot(id, data, layout);
 }
 
@@ -199,7 +137,7 @@ function disegnaDayTrend(xvalues,y1,y2,y3,id){
 	};
     var data = [trace1,trace2,trace3];
   var layout = {
-    title: "Trend voto",
+    //title: "Trend voto",
     font: {
       size: 12
     },
@@ -259,7 +197,7 @@ function disegnaWeekTrend(xvalues,y1,y2,y3,id){
 	};
     var data = [trace1,trace2,trace3];
   var layout = {
-    title: "Trend voto",
+    //title: "Trend voto",
     font: {
       size: 12
     },
@@ -314,7 +252,7 @@ function disegnaPop(xv,y1,y2,y3,id){
 	};
   	var data = [trace1,trace2,trace3];
   	var layout = {
-	  	title: 'Popolarità',
+	  	//title: 'Popolarità',
 		xaxis: {title: 'Time',
     	type: 'date'},
 		barmode: 'stack',
@@ -343,7 +281,7 @@ function stackedArea(traces) {
 	}
 	return traces;
 }
-
+/*
 function disegnaPopVote(xv,y1,y2,y3,y4,id){
 	var trace1={
 		name: "SI",
@@ -412,7 +350,7 @@ function disegnaPopVote(xv,y1,y2,y3,y4,id){
 	};
 
   Plotly.plot(id, traces, layout);
-}
+}*/
 function disegnaEntity(title,ytitle,col,text,num,id){
 	var data=[{
 	   	x: num,
@@ -424,14 +362,14 @@ function disegnaEntity(title,ytitle,col,text,num,id){
     	}
 	}];
   var layout = {
-    title: title,
+    //title: title,
     /*width: 800,*/
-    height: 600,
+    //height: 80vh,
      margin: {
     l: 150,
     r: 20,
-    t: 200,
-    b: 150
+    t: 50,
+    b: 100
   },
     font: {
       size: 12
@@ -456,22 +394,43 @@ function disegnaEntity(title,ytitle,col,text,num,id){
 /*************************************************************/
 var loadingErrorMessage = "Server down! :(";
 /*************************************************************/
-function votingIntentions(input){
+function pre_resize(divID,WIDTH_IN_PERCENT_OF_PARENT,HEIGHT_IN_PERCENT_OF_PARENT){
+	var d3 = Plotly.d3;
+	var gd3 = d3.select("#"+divID).style({
+		width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+        //'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'   
+	});
+	var gd = gd3.node();
+	return gd;
+}
+function do_resize(node){
+	window.addEventListener('resize', function() { Plotly.Plots.resize(node); });
+}
+/*************************************************************/
+function votingIntentions(input,div){
 	Plotly.d3.json(input,function(error,data){
 	      if(error){
 	        console.error(data);
-	        document.getElementById("divGR1").innerHTML=loadingErrorMessage;
+	        document.getElementById(div).innerHTML=loadingErrorMessage;
 	        return;
 	      }
-	      var fazione = [];
-	      var perc = [];
-	      for(var i=0; i<data.length;++i){
-	        var row = data[i];
-	        fazione.push(row.Fazione);
-	        perc.push(+row.Percentuale);
-	      }
-	      disegna(fazione,perc,"divGR1");
-		});
+
+      	var gd = pre_resize(div,70,45);
+
+	    var fazione = [];
+	    var perc = [];
+	    for(var i=0; i<data.length;++i){
+		    var row = data[i];
+		    fazione.push(row.Fazione);
+		    perc.push(+row.Percentuale);
+	    }
+	    disegna(fazione,perc,div);
+    	
+    	do_resize(gd);
+	});
 }
 
 function votingTrend(input,type,div){
@@ -481,6 +440,7 @@ function votingTrend(input,type,div){
 	        document.getElementById(div).innerHTML=loadingErrorMessage;
 	        return;
 	      }
+	      var gd = pre_resize(div,95,45);
 	      var myDate;
 	      var dates = [];
 	      var percSI = [];
@@ -502,16 +462,17 @@ function votingTrend(input,type,div){
 		  }else if(type == 3){
 			  disegnaWeekTrend(dates,percSI,percNO,maggioranza,div);
 		  }
-	      
+	      do_resize(gd);
 		});
 }
-function popularitySum(input){
+function popularitySum(input,div){
 	Plotly.d3.json(input,function(error,data){
 	      if(error){
 	        console.error(data);
-	        document.getElementById("divGR3").innerHTML=loadingErrorMessage;
+	        document.getElementById(div).innerHTML=loadingErrorMessage;
 	        return;
 	      }
+	      var gd = pre_resize(div,95,50);
 	      var dates = [];
 	      var si = [];
 	      var no = [];
@@ -523,9 +484,11 @@ function popularitySum(input){
 	        no.push(row.NO);
 	        altro.push(row.Altro);
 	      }
-	      disegnaPop(dates,si,no,altro,"divGR3");
+	      disegnaPop(dates,si,no,altro,div);
+	      do_resize(gd);
 		});
 }
+/*
 function popularityVote(input){
 	Plotly.d3.json(input,function(error,data){
 	      if(error){
@@ -533,6 +496,7 @@ function popularityVote(input){
 	        document.getElementById("divGR5").innerHTML=loadingErrorMessage;
 	        return;
 	      }
+	      var gd = pre_resize(div,70,40);
 	      var pop = [];
 	      var si = [];
 	      var no = [];
@@ -547,8 +511,9 @@ function popularityVote(input){
 	        maggioranza.push(0.5000);
 	      }
 	      disegnaPopVote(pop,si,altro,no,maggioranza,"divGR5");
+	      do_resize(gd);
 		});
-}
+}*/
 function entity(title,ytitle,col,input,div){
 	Plotly.d3.json(input,function(error,data){
 	      if(error){
@@ -556,29 +521,34 @@ function entity(title,ytitle,col,input,div){
 	        document.getElementById(div).innerHTML=loadingErrorMessage;
 	        return;
 	      }
+	      var gd = pre_resize(div,90,60);
 	      var text = [];
 	      var num = [];
-	      console.log(data.length);
+	      //console.log(data.length);
 	      for(var i=data.length-16; i<data.length;i++){
 	        var row = data[i];
 	        text.push(row.entity);
 	        num.push(row.num);
-	        console.log("["+i+"]"+row.entity+":"+row.num);
+	        //console.log("["+i+"]"+row.entity+":"+row.num);
 	      }
-	      console.log(data);
+	      //console.log(data);
 	      disegnaEntity(title,ytitle,col,text,num,div);
+	      do_resize(gd);
 		});
 }
 
 onload = function(){
-		votingIntentions("http://46.101.130.226:8088/referendum/voting_intentions");
+
+		
+
+		votingIntentions("http://46.101.130.226:8088/referendum/voting_intentions","divGR1");
 		/*******************************************************/
 		votingTrend("http://46.101.130.226:8088/referendum/voting_trend",0,"divGR2");
-		votingTrend("http://46.101.130.226:8088/referendum/voting_hour_trend",1,"divGR2H");
+		//votingTrend("http://46.101.130.226:8088/referendum/voting_hour_trend",1,"divGR2H");
 		votingTrend("http://46.101.130.226:8088/referendum/voting_day_trend",2,"divGR2D");
 		votingTrend("http://46.101.130.226:8088/referendum/voting_week_trend",3,"divGR2W");
 		/********************************************************/
-		popularitySum("http://46.101.130.226:8088/referendum/popularity_sum");
+		popularitySum("http://46.101.130.226:8088/referendum/popularity_sum","divGR3");
 		/********************************************************/
 		//popularityVote("popularityVote.json");
 		/*********************************************************/
@@ -588,20 +558,42 @@ onload = function(){
 		entity("Hashtags (NO)","Hashtags","#ff9933","http://46.101.130.226:8088/referendum/hashtags_no","divHN");
 };
 
-var d3 = Plotly.d3;
-var WIDTH_IN_PERCENT_OF_PARENT = 90,
-    HEIGHT_IN_PERCENT_OF_PARENT = 90;
-var gd3 = d3.select("div[id='divGR2']").style({
-        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
-        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
-        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
-        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
-    }); 	
+/*(function() {
+		var d3 = Plotly.d3;
 
-var gd = gd3.node();
+		var WIDTH_IN_PERCENT_OF_PARENT = 60,
+		    HEIGHT_IN_PERCENT_OF_PARENT = 80;
 
-/*window.onresize = function() {
-        Plotly.Plots.resize(gd);
- };*/
+		var gd3 = d3.select('#divGR1')
+		    .style({
+		        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+		        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
 
- window.addEventListener('resize', function() { Plotly.Plots.resize(gd); });
+		        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+		        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
+		    });
+
+		var gd = gd3.node();
+
+		Plotly.plot("questo", [{
+		    type: 'bar',
+		    x: [1, 2, 3, 4],
+		    y: [5, 10, 2, 8],
+		    marker: {
+		        color: '#C8A2C8',
+		        line: {
+		            width: 2.5
+		        }
+		    }
+		}], {
+		    title: 'Auto-Resize',
+		    font: {
+		        size: 16
+		    }
+		});
+
+		window.onresize = function() {
+		    Plotly.Plots.resize(gd);
+		};
+
+	})();*/
