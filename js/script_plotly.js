@@ -12,6 +12,8 @@ function disegna(xvalues,yvalues,id){
     //title: "Intenzioni di voto",
     /*width: 400,
     height: 400,*/
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
     ticks:"outside",
     font: {
       size: 12
@@ -78,6 +80,8 @@ function disegnaTrend(xvalues,y1,y2,y3,id){
     var data = [trace1,trace2,trace3];
   var layout = {
     //title: "Trend voto",
+        paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
     font: {
       size: 12
     },
@@ -138,6 +142,8 @@ function disegnaDayTrend(xvalues,y1,y2,y3,id){
     var data = [trace1,trace2,trace3];
   var layout = {
     //title: "Trend voto",
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
     font: {
       size: 12
     },
@@ -198,6 +204,8 @@ function disegnaWeekTrend(xvalues,y1,y2,y3,id){
     var data = [trace1,trace2,trace3];
   var layout = {
     //title: "Trend voto",
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
     font: {
       size: 12
     },
@@ -252,6 +260,8 @@ function disegnaPop(xv,y1,y2,y3,id){
 	};
   	var data = [trace1,trace2,trace3];
   	var layout = {
+  		paper_bgcolor: 'rgba(0,0,0,0)',
+    	plot_bgcolor: 'rgba(0,0,0,0)',
 	  	//title: 'Popolarità',
 		xaxis: {title: 'Time',
     	type: 'date'},
@@ -365,6 +375,8 @@ function disegnaEntity(title,ytitle,col,text,num,id){
     //title: title,
     /*width: 800,*/
     //height: 80vh,
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
      margin: {
     l: 150,
     r: 20,
@@ -440,7 +452,7 @@ function votingTrend(input,type,div){
 	        document.getElementById(div).innerHTML=loadingErrorMessage;
 	        return;
 	      }
-	      var gd = pre_resize(div,95,45);
+	      var gd = pre_resize(div,90,45);
 	      var myDate;
 	      var dates = [];
 	      var percSI = [];

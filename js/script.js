@@ -89,7 +89,7 @@ function loadJSONP(url,success,failure){
 function process(jsonText){
 	var status = JSON.parse(jsonText);
 	var el = document.getElementById("info_status");
-	var html = "Tweet: " + status.tweets + " / Utenti: " + status.users + " (status: " + status.content + " )";
+	var html = "Tweet: " + status.tweets + " / Utenti: " + status.users + " (status: " + status.content + ")";
 	//var html = "<p>There are " + pubs.length + " publications<p><ul>";
   /*for(var i=0; i<5; ++i){
     html+="<li>" + pubs[i].authors_string +
@@ -105,3 +105,14 @@ function process(jsonText){
 window.onload = function(){
   loadJSONP(url,process);
 };*/
+
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+/*var pattern = Trianglify({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+    document.body.appendChild(pattern.canvas());*/
